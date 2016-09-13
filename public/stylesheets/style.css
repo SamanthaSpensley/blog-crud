@@ -9,4 +9,18 @@ a {
 
 .intro {
   font-size: 15vw;
+  margin-bottom: 2vw;
+}
+
+.displayInline {
+  display: flex;
+  flex-direction: row;
+}
+.btn {
+  margin-top: 1vw;
+  margin-right: 1vw;
+  margin-bottom: 1vw;
+}
+legend {
+  padding-top: 2vw;
 }

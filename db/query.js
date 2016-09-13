@@ -15,5 +15,5 @@ function Comments() {
 module.exports = {
   getAllPosts: Posts,
   getAllUsers: Users,
-  getAllComments: Comments
+  getAllComments: Comments,
 };

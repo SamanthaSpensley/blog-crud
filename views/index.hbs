@@ -1,11 +1,11 @@
 <h1 class="intro">{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h5>Welcome to {{title}}. The blog of all things bloggy. Blog on!</h5>
 
-<a href='/new'>New Blog Post</a>
-
-<div id="snippets">
-  {{#each post}}
-  <h2>{{this.title}}</h2>
-  <p>{{this.content}}</p>
-  {{/each}}
-</div>
+{{#each post}}
+  <div id="snippets">
+    <h2>{{this.title}}</h2>
+    <h5>by AUTHOR</h5>
+    <p>{{this.content}}</p>
+    <a href='/{{this.id}}'>Read more</a>
+  </div>
+{{/each}}
