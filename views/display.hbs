@@ -10,20 +10,23 @@
   </form>
 </div>
 
+{{#if comment}}
+  {{#each comment}}
+    <div class="commentsSection">
+      <h5>AUTHOR</h5>
+      <p>{{this.content}}</p>
+    </div>
+  {{/each}}
+{{/if}}
 
-
-<!--  Empty div to display comments  -->
-<div class="displayComment">
-</div>
-
-<form class="form-horizontal">
+<form class="form-horizontal" action="{{post.id}}" method="POST">
   <fieldset>
     <legend></legend>
 
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">Comment:</label>
       <div class="col-lg-10">
-        <textarea class="form-control" rows="3" id="textArea"></textarea>
+        <textarea class="form-control" rows="3" id="textArea" name="content"></textarea>
       </div>
     </div>
 

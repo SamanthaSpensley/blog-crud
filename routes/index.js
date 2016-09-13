@@ -18,14 +18,20 @@ router.get('/new', function(req, res, next) {
   res.render('new');
 });
 
+
 //GET single post page
 router.get('/:id', function(req, res, next) {
   query.getAllPosts().where({id: req.params.id}).first()
   .then(function(results) {
-    res.render('display', {
-      post: results
-    });
+    query.getComments(req.params.id)
+    .then(function(comments) {
+      res.render('display', {
+        post: results,
+        comments: comments
+      });
+    })
   })
+  // query.getCommentsPerPost()
 })
 
 //EDIT single blog post
@@ -67,5 +73,19 @@ router.post('/:id/delete', function(req, res, next) {
     res.redirect('/')
   })
 })
+
+
+//COMMENTS!!
+router.post('/:id', function(req, res, next) {
+  query.getAllComments().insert({
+    content: req.body.content,
+    // author_id: 1,
+    post_id: req.params.id
+  })
+  .then(function() {
+    res.redirect(`/${req.params.id}`)
+  })
+})
+
 
 module.exports = router;
