@@ -1,11 +1,14 @@
-<h1 class="intro">{{title}}</h1>
-<h5>Welcome to {{title}}. The blog of all things bloggy. Blog on!</h5>
+<div class="intro">
+  <h1 class="introTitle">{{title}}</h1>
+  <!-- <h5>Welcome to {{title}}. The blog of all things bloggy. Blog on!</h5> -->
+</div>
+
 
 {{#each post}}
   <div id="snippets">
     <h2>{{this.title}}</h2>
     <h5>by AUTHOR</h5>
-    <p>{{this.content}}</p>
+    <p>{{this.snippet}}</p>
     <a href='/{{this.id}}'>Read more</a>
   </div>
 {{/each}}

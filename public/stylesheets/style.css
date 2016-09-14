@@ -8,6 +8,9 @@ a {
 }
 
 .intro {
+  margin-bottom: 5vw;
+}
+.introTitle {
   font-size: 15vw;
   margin-bottom: 2vw;
 }
@@ -21,6 +24,12 @@ a {
   margin-right: 1vw;
   margin-bottom: 1vw;
 }
+
+.commentSection {
+  margin-bottom: 3vw;
+}
+
 legend {
-  padding-top: 2vw;
+  margin-top: 2vw;
+  margin-bottom: 2vw;
 }

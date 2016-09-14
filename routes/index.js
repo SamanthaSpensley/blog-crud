@@ -4,7 +4,7 @@ var query = require('../db/query')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  query.getAllPosts().select()
+  query.getAllPosts()
   .then(function(results) {
     res.render('index', {
       title: 'blog.',
@@ -13,13 +13,19 @@ router.get('/', function(req, res, next) {
   })
 });
 
-//create new blog post
+//Create New Blog Post
 router.get('/new', function(req, res, next) {
   res.render('new');
 });
 
+router.post('/', function(req, res, next) {
+  query.createPost(req.body.title, req.body.content)
+  .then(function() {
+    res.redirect('/')
+  })
+})
 
-//GET single post page
+//Get a Single Post With Comments
 router.get('/:id', function(req, res, next) {
   query.getAllPosts().where({id: req.params.id}).first()
   .then(function(results) {
@@ -27,16 +33,15 @@ router.get('/:id', function(req, res, next) {
     .then(function(comments) {
       res.render('display', {
         post: results,
-        comments: comments
+        comment: comments
       });
     })
   })
-  // query.getCommentsPerPost()
 })
 
-//EDIT single blog post
+//Edit an Existing Post
 router.get('/:id/edit', function(req, res, next) {
-  query.getAllPosts().where({id: req.params.id}).first()
+  query.getPostbyId(req.params.id).first()
   .then(function(results) {
     res.render('edit', {
       post: results
@@ -44,38 +49,25 @@ router.get('/:id/edit', function(req, res, next) {
   })
 })
 
-//EDIT existing blog post using post
 router.post('/:id/edit', function(req, res, next) {
-  query.getAllPosts().where({id: req.params.id}).update({
-    title: req.body.title,
-    content: req.body.content
-  })
+  query.editPost(req.params.id).first()
   .then(function() {
     res.redirect(`/${req.params.id}`);
   })
 })
 
-//POST new blog post
-router.post('/', function(req, res, next) {
-  query.getAllPosts().insert({
-    title: req.body.title,
-    content: req.body.content
-  })
-  .then(function() {
-    res.redirect('/')
-  })
-})
-
-//DELETE single blog post
+//Delete an Existing Post
 router.post('/:id/delete', function(req, res, next) {
-  query.getAllPosts().where({id: req.params.id}).del()
+  query.deleteComments(req.params.id)
   .then(function() {
-    res.redirect('/')
+    query.deletePost(req.params.id)
+    .then(function() {
+      res.redirect('/')
+    })
   })
 })
 
-
-//COMMENTS!!
+//Create Comment
 router.post('/:id', function(req, res, next) {
   query.getAllComments().insert({
     content: req.body.content,
@@ -87,5 +79,12 @@ router.post('/:id', function(req, res, next) {
   })
 })
 
+//Delete Single Comment
+router.post('/comment/:id/delete', function(req, res, next) {
+  query.deleteComment(req.params.id)
+  .then(function() {
+    res.redirect('/')
+  })
+})
 
 module.exports = router;
