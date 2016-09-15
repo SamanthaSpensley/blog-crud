@@ -1,4 +1,57 @@
-var knex = require('./knex')
+var bcrypt = require('bcrypt');
+var knex = require('./knex');
+
+//USERS
+function Users() {
+  return knex('user')
+}
+
+function HashPassword(password) {
+  return bcrypt.hashSync(password, 10)
+}
+
+function GetUser(username) {
+  return knex('user').select('username').where('username', username).first();
+}
+
+function GetHashedPassword(username) {
+  return knex('user').select(user.password).where('username', username).first();
+}
+
+function AuthenticateUser(username, password) {
+  return GetUser(username)
+  .then(function(userInfo){
+    if(!userInfo) {
+      return false
+    }
+    return GetHashedPassword(username)
+    .then(function(hashedPassword) {
+      hashedPassword = hashedPassword.password;
+      return bcrypt.compareSync(password, hashedPassword)
+    });
+  });
+}
+
+function AddUser(username, password) {
+  if(!username || !password) {
+    return false
+  }
+  return GetUser(username)
+  .then(function(userInfo) {
+    if(userInfo) {
+      return false
+    }
+    return knex('user').insert({
+      username: username,
+      password: HashPassword(password),
+      admin: false})
+  })
+  .catch(function(err) {
+    return err;
+  });
+}
+
+
 
 // POSTS
 function Posts() {
@@ -28,11 +81,6 @@ function EditPost(post_id, title, content, snippet) {
 
 function DeletePost(post_id) {
   return knex('post').where('id', post_id).del();
-}
-
-//USERS
-function Users() {
-  return knex('user')
 }
 
 
@@ -67,12 +115,19 @@ function DeleteComment(comment_id){
 
 
 module.exports = {
+  getAllUsers: Users,
+  hashPassword: HashPassword,
+  getHashedPassword: GetHashedPassword,
+  getUser: GetUser,
+  authenticate: AuthenticateUser,
+  addUser: AddUser,
+
   getAllPosts: Posts,
   getPostbyId: GetPostById,
   createPost: CreatePost,
   editPost: EditPost,
   deletePost: DeletePost,
-  getAllUsers: Users,
+
   getAllComments: Comments,
   // createComment: CreateComment,
   getComments: GetComments,

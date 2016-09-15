@@ -1,7 +1,43 @@
 var express = require('express');
 var router = express.Router();
+var passport = require('../passport')
 var query = require('../db/query')
 
+// Users
+//logout
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+//Register
+router.get('/register', function(req, res, next) {
+  res.render('register');
+});
+
+router.post('/register', function(req, res, next) {
+  query.addUser(req.body.username, req.body.password)
+  .then(function() {
+    res.redirect('/login')
+  })
+  .catch(function(err) {
+    res.render('register', {errMessage: "Username already in use, please select a different username"})
+  })
+})
+
+//Login
+router.get('/login', function(req, res, next) {
+  res.render('login');
+});
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/login'
+})
+);
+
+
+//Posts
 /* GET home page. */
 router.get('/', function(req, res, next) {
   query.getAllPosts()
@@ -17,6 +53,7 @@ router.get('/', function(req, res, next) {
 router.get('/new', function(req, res, next) {
   res.render('new');
 });
+
 
 router.post('/', function(req, res, next) {
   query.createPost(req.body.title, req.body.content)

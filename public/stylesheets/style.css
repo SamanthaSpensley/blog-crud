@@ -6,9 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
-
 .intro {
   margin-bottom: 5vw;
+}
+.snippets {
+  padding-bottom: 5vw;
 }
 .introTitle {
   font-size: 15vw;
@@ -31,5 +33,8 @@ a {
 
 legend {
   margin-top: 2vw;
+  margin-bottom: 2vw;
+}
+h4 {
   margin-bottom: 2vw;
 }
