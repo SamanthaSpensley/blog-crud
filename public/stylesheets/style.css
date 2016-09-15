@@ -3,9 +3,7 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
+/* LANDING PAGE */
 .intro {
   margin-bottom: 5vw;
 }
@@ -17,24 +15,36 @@ a {
   margin-bottom: 2vw;
 }
 
+/* STRUCTURE */
+.displayPost {
+  white-space: pre-line;
+}
 .displayInline {
   display: flex;
   flex-direction: row;
 }
+.commentSection {
+  margin-bottom: 3vw;
+}
+legend {
+  margin-top: 2vw;
+  margin-bottom: 2vw;
+}
+
+/* BUTTONS */
 .btn {
   margin-top: 1vw;
   margin-right: 1vw;
   margin-bottom: 1vw;
 }
 
-.commentSection {
-  margin-bottom: 3vw;
-}
-
-legend {
-  margin-top: 2vw;
+/* TEXT */
+h1 {
   margin-bottom: 2vw;
 }
 h4 {
   margin-bottom: 2vw;
+}
+a {
+  color: #00B7FF;
 }

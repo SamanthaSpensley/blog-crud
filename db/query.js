@@ -11,11 +11,11 @@ function HashPassword(password) {
 }
 
 function GetUser(username) {
-  return knex('user').select('username').where('username', username).first();
+  return knex('user').select('user.username').where('username', username).first();
 }
 
 function GetHashedPassword(username) {
-  return knex('user').select(user.password).where('username', username).first();
+  return knex('user').select('user.password').where('username', username).first();
 }
 
 function AuthenticateUser(username, password) {
@@ -69,6 +69,10 @@ function CreatePost(title, content, author_id, snippet) {
     author_id: author_id,
     snippet: content.substring(0,400)+'...'
   })
+}
+
+function GetUsername(username) {
+  return knex('user').select('id', 'username').where('username', username).first();
 }
 
 function EditPost(post_id, title, content, snippet) {
@@ -125,6 +129,7 @@ module.exports = {
   getAllPosts: Posts,
   getPostbyId: GetPostById,
   createPost: CreatePost,
+  getUsername: GetUsername,
   editPost: EditPost,
   deletePost: DeletePost,
 

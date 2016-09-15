@@ -1,52 +1,58 @@
-<h1>{{post.title}}</h1>
-<p>{{post.content}}</p>
+<div class="container">
 
-<div class="displayInline">
-  <a href='/{{post.id}}/edit' class="btn btn-default btn-sm">Edit Post</a>
+  <div class="displayPost">
+    <h1>{{post.title}}</h1>
+    <p>{{post.content}}</p>
+  </div>
 
-  <form action="/{{post.id}}/delete" method="POST">
-    <input type="hidden" name="id" value="{{post.id}}" />
-    <input type="submit" class="btn btn-primary btn-sm" value="Delete Post" />
-  </form>
-</div>
+  <div class="displayInline">
+    <a href='/{{post.id}}/edit' class="btn btn-primary btn-sm">Edit Post</a>
 
-{{#if comment}}
-  <legend></legend>
-  <h4>Comments:</h4>
-  {{#each comment}}
-    <div class="commentSection">
-      <h5>AUTHOR</h5>
-      <p>{{this.content}}</p>
+    <form action="/{{post.id}}/delete" method="POST">
+      <input type="hidden" name="id" value="{{post.id}}" />
+      <input type="submit" class="btn btn-default btn-sm" value="Delete Post" />
+    </form>
+  </div>
 
-      <form action="/comment/{{this.id}}/delete" method="POST">
-        <input type="hidden" name="id" value="{{this.id}}" />
-        <input type="submit" class="btn btn-primary btn-xs" value="Delete" />
-      </form>
-
-    </div>
-  {{/each}}
-{{/if}}
-
-<form class="form-horizontal" action="{{post.id}}" method="POST">
-  <fieldset>
+  {{#if comment}}
     <legend></legend>
+    <h4>Comments:</h4>
+    {{#each comment}}
+      <div class="commentSection">
+        <h5>AUTHOR</h5>
+        <p>{{this.content}}</p>
 
-    <div class="form-group">
-      <label for="textArea" class="col-lg-2 control-label">Add a Comment:</label>
-      <div class="col-lg-10">
-        <textarea class="form-control" rows="3" id="textArea" name="content"></textarea>
+        <form action="/comment/{{this.id}}/delete" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}" />
+          <input type="submit" class="btn btn-primary btn-xs" value="Delete" />
+        </form>
+
       </div>
-    </div>
+    {{/each}}
+  {{/if}}
 
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <button type="reset" class="btn btn-default btn-sm">Cancel</button>
-        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+  <form class="form-horizontal" action="{{post.id}}" method="POST">
+    <fieldset>
+      <legend></legend>
+
+      <div class="form-group">
+        <!-- <label for="textArea" class="col-lg-2 control-label">Add a Comment:</label> -->
+        <div class="col-lg-10">
+          <h4>Add a comment:</h4>
+          <textarea class="form-control" rows="3" id="textArea" name="content"></textarea>
+        </div>
       </div>
-    </div>
-  </fieldset>
-</form>
 
-<div>
-  <a href="/">Back to homepage</a>
+      <div class="form-group">
+        <div class="col-lg-10">
+          <button type="reset" class="btn btn-primary btn-sm">Cancel</button>
+          <button type="submit" class="btn btn-default btn-sm">Submit</button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+
+  <div>
+    <a href="/">Back to homepage</a>
+  </div>
 </div>

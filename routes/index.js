@@ -51,14 +51,25 @@ router.get('/', function(req, res, next) {
 
 //Create New Blog Post
 router.get('/new', function(req, res, next) {
+  if(!req.isAuthenticated()) {
+    res.redirect('/login')
+    return;
+  }
   res.render('new');
 });
 
-
 router.post('/', function(req, res, next) {
-  query.createPost(req.body.title, req.body.content)
-  .then(function() {
-    res.redirect('/')
+  if(!req.isAuthenticated()) {
+    res.redirect('/login')
+    return;
+  }
+  query.getUsername(req.user.username)
+  .then(function(userInfo) {
+    // console.log(req.user.username);
+    query.createPost(req.body.title, req.body.content)
+    .then(function() {
+      res.redirect('/')
+    })
   })
 })
 
@@ -78,6 +89,10 @@ router.get('/:id', function(req, res, next) {
 
 //Edit an Existing Post
 router.get('/:id/edit', function(req, res, next) {
+  if(!req.isAuthenticated()) {
+    res.redirect('/login')
+    return;
+  }
   query.getPostbyId(req.params.id).first()
   .then(function(results) {
     res.render('edit', {
@@ -95,6 +110,10 @@ router.post('/:id/edit', function(req, res, next) {
 
 //Delete an Existing Post
 router.post('/:id/delete', function(req, res, next) {
+  if(!req.isAuthenticated()) {
+    res.redirect('/login')
+    return;
+  }
   query.deleteComments(req.params.id)
   .then(function() {
     query.deletePost(req.params.id)
@@ -106,6 +125,10 @@ router.post('/:id/delete', function(req, res, next) {
 
 //Create Comment
 router.post('/:id', function(req, res, next) {
+  if(!req.isAuthenticated()) {
+    res.redirect('/login')
+    return;
+  }
   query.getAllComments().insert({
     content: req.body.content,
     // author_id: 1,
@@ -118,6 +141,10 @@ router.post('/:id', function(req, res, next) {
 
 //Delete Single Comment
 router.post('/comment/:id/delete', function(req, res, next) {
+  if(!req.isAuthenticated()) {
+    res.redirect('/login')
+    return;
+  }
   query.deleteComment(req.params.id)
   .then(function() {
     res.redirect('/')
