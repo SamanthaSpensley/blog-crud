@@ -1,9 +1,15 @@
 // Update with your config settings.
-require('dotenv').config();
+
+var dotenv = require('dotenv').config()
+
+// if(!process.env.NODE_ENV){
+//   require('dotenv').config();
+// }
+
 module.exports = {
 
   development: {
-    client: 'pg',
+    client: 'postgres',
     connection: 'postgres://localhost/blog'
   },
 
