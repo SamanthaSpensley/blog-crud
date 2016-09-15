@@ -1,5 +1,5 @@
 var bcrypt = require('bcrypt');
-var knex = require('./knex');
+var knex = require('./knex.js');
 
 //USERS
 function Users() {
