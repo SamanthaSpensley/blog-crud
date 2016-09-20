@@ -7,7 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('blog-crud:server');
 var http = require('http');
+var server = require('http').Server(app);
+var io = require('../socket');
 
+io.attach(server);
 /**
  * Get port from environment and store in Express.
  */
@@ -19,7 +22,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+// var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.

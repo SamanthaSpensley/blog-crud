@@ -42,12 +42,21 @@ router.post('/login', passport.authenticate('local', {
 router.get('/', function(req, res, next) {
   query.getAllPosts()
   .then(function(results) {
+    // console.log(results);
     res.render('index', {
-      title: 'blog.',
+      title: "I be bloggin'.",
       post: results
     });
   })
 });
+
+router.get('/chat', function(req, res, next) {
+  if(!req.isAuthenticated()) {
+    res.redirect('/login')
+    return;
+  }
+  res.render('chat');
+})
 
 //Create New Blog Post
 router.get('/new', function(req, res, next) {
@@ -65,8 +74,8 @@ router.post('/', function(req, res, next) {
   }
   query.getUsername(req.user.username)
   .then(function(userInfo) {
-    // console.log(req.user.username);
-    query.createPost(req.body.title, req.body.content)
+    console.log(req.user.username);
+    query.createPost(req.body.title, req.body.content, userInfo.id)
     .then(function() {
       res.redirect('/')
     })
@@ -150,5 +159,7 @@ router.post('/comment/:id/delete', function(req, res, next) {
     res.redirect('/')
   })
 })
+
+
 
 module.exports = router;

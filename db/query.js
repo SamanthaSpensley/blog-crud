@@ -55,7 +55,7 @@ function AddUser(username, password) {
 
 // POSTS
 function Posts() {
-  return knex('post').select().orderBy('id', 'desc');
+  return knex('post').select('post.id AS post.id','post.snippet AS snippet','post.title AS title','user.username AS username').innerJoin('user','user.id','post.author_id').orderBy('post.id', 'desc');
 }
 
 function GetPostById(post_id) {
@@ -134,7 +134,6 @@ module.exports = {
   deletePost: DeletePost,
 
   getAllComments: Comments,
-  // createComment: CreateComment,
   getComments: GetComments,
   createComment: CreateComment,
   deleteComments: DeleteComments,
